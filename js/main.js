@@ -44,7 +44,7 @@ const TRANSLATIONS = {
     },
   },
   en: {
-    bh: 'BH',
+    bh: 'B"H',
     welcome: 'Welcome',
     restaurantName: 'LeChaim in Keri',
     pageTitle: 'LeChaim in Keri',
@@ -373,33 +373,37 @@ function getItemsInCartText(count) {
   return t('itemsInCart').replace('{n}', count);
 }
 
-/** לוגו ב-Header – מציג fallback אם הקובץ חסר */
-function setupHeaderLogo(imgEl) {
-  if (!imgEl) return;
-  const fallback = imgEl.nextElementSibling;
+/** לוגו ב-Header (אייקון + טקסט) – מציג fallback אם קובץ חסר */
+function setupHeaderLogo(groupEl) {
+  if (!groupEl) return;
 
-  const hideLogo = () => {
-    imgEl.classList.add('menu-header__logo--hidden');
-    imgEl.style.display = 'none';
-    if (fallback) fallback.style.display = 'flex';
+  const images = [...groupEl.querySelectorAll('img')];
+  const fallback = groupEl.nextElementSibling;
+  const status = new Map(images.map((img) => [img, null]));
+
+  const update = () => {
+    const values = [...status.values()];
+    if (values.some((v) => v === 'error')) {
+      groupEl.classList.add('menu-header__logo-group--hidden');
+      if (fallback) fallback.style.display = 'flex';
+      return;
+    }
+    if (values.every((v) => v === 'ok')) {
+      groupEl.classList.remove('menu-header__logo-group--hidden');
+      if (fallback) fallback.style.display = 'none';
+    }
   };
 
-  const showLogo = () => {
-    imgEl.classList.remove('menu-header__logo--hidden');
-    imgEl.style.display = '';
-    if (fallback) fallback.style.display = 'none';
+  const markImage = (img, ok) => {
+    status.set(img, ok ? 'ok' : 'error');
+    update();
   };
 
-  imgEl.addEventListener('error', hideLogo);
-  imgEl.addEventListener('load', () => {
-    if (imgEl.naturalWidth > 0) showLogo();
-    else hideLogo();
+  images.forEach((img) => {
+    img.addEventListener('error', () => markImage(img, false));
+    img.addEventListener('load', () => markImage(img, img.naturalWidth > 0));
+    if (img.complete) markImage(img, img.naturalWidth > 0);
   });
-
-  if (imgEl.complete) {
-    if (imgEl.naturalWidth > 0) showLogo();
-    else hideLogo();
-  }
 }
 
 /** לוגו במסך הבית */

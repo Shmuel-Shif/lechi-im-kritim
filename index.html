@@ -67,7 +67,22 @@
 
         <header class="menu-header">
           <div class="menu-header__brand">
-            <img src="assets/images/logo.png" alt="לחיים בכריתים" class="menu-header__logo" id="header-logo">
+            <div class="menu-header__logo-group" id="header-logo">
+              <img
+                src="assets/images/logo-image.png"
+                alt=""
+                class="menu-header__logo-icon"
+                width="76"
+                height="76"
+              >
+              <img
+                src="assets/images/logo-text.png"
+                alt="לחיים בכריתים – LECHAIM The Pearl of Crete"
+                class="menu-header__logo-wordmark"
+                width="220"
+                height="58"
+              >
+            </div>
             <div class="menu-header__logo-fallback">
               <span class="menu-header__lyre" aria-hidden="true">♪</span>
               <div class="menu-header__logo-text">
@@ -142,17 +157,21 @@
 
       <!-- סרגל סל תחתון -->
       <footer class="cart-bar" id="cart-bar">
-        <button type="button" class="btn btn--gold cart-bar__view" id="btn-view-cart" data-i18n="viewCart">
-          צפה בסל
-        </button>
-        <div class="cart-bar__total">
-          <span class="cart-bar__total-amount" id="cart-bar-total">₪0</span>
-          <span class="cart-bar__total-label" data-i18n="total">סה״כ</span>
-        </div>
         <button type="button" class="cart-bar__expand" id="btn-expand-cart" aria-expanded="false">
-          <img src="assets/icons/chevron-up.svg" alt="" class="cart-bar__chevron" width="18" height="18">
+          <img src="assets/icons/chevron-up.svg" alt="" class="cart-bar__chevron" width="16" height="16">
           <span id="cart-bar-count">אין פריטים בסל</span>
         </button>
+        <div class="cart-bar__actions">
+          <div class="cart-bar__total">
+            <span class="cart-bar__total-label" data-i18n="total">סה״כ</span>
+            <span class="cart-bar__total-amount" id="cart-bar-total">₪0</span>
+          </div>
+          <span class="cart-bar__divider" aria-hidden="true"></span>
+          <button type="button" class="cart-bar__view" id="btn-view-cart" data-i18n="viewCart">
+            צפה בסל
+          </button>
+        </div>
+        <div class="cart-bar__meander" aria-hidden="true"></div>
       </footer>
     </div>
 
